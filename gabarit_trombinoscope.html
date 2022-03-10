@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+		<meta charset="UTF-8">
+		<title>{titre}</title>
+		<style type="text/css">
+			#titre {font-size: 125%; width: 15em; border-radius: 10px; padding: 4px;}
+			div {margin: 10px; text-align: center; float: left;}
+			.eleve {overflow: hidden; height: 185px; width: 110px; border: 1px #aaa dashed;
+			background-color: #eee;}
+			.eleve img {border-radius:5px;/*height: 120px;*/ width: 100px; margin: 5px; }
+			#menu {float: none;}
+			.libel {margin-top: -3px; margin-bottom: 2px; overflow: hidden; white-space: nowrap;
+			font-family: Verdana,Arial,Helvetica,sans-serif;}
+			.erreur {color: maroon; text-align: center;}
+			h3 button, #selection {font-size:150%;}
+			br {clear:both;}     
+			td {height: 50px; width: 50px;}
+			table td {text-align: center; vertical-align: middle;}
+			.select {background-color: tomato;}
+			
+			@media print
+			{    
+				#place_plus, #poubelle, #nb-par-ligne {display: none;}
+			}
+		</style>
+		<script>
+
+// ©PCo-2020/08
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.currentTarget.id);
+}
+
+function drop(ev) {
+    var source = document.getElementById(ev.dataTransfer.getData("text"));
+    var destination = ev.currentTarget;
+	if (ev.ctrlKey) { // insertion source avant destination => décalage des photos !
+		var sourceSuiv = source.nextElementSibling;   
+		if (destination == sourceSuiv) {
+			source.before(destination);
+		}
+		else {
+			destination.before(source);
+		} 
+		
+	} else { // permutation source / destination
+		swap(source, destination);
+	}
+	ajouterRetour();
+    ev.preventDefault();
+}
+
+
+// https://www.sitepoint.com/shorthand-javascript-techniques/
+// https://stackoverflow.com/questions/9732624/how-to-swap-dom-child-nodes-in-javascript/21536690
+function swap(node1, node2) {
+	var node1_suivant = node1.nextElementSibling;
+	if (node1_suivant == node2) { // cas particulier !
+		node1.before(node2)
+	} else {
+		document.body.insertBefore(node1, node2);	
+		if (node1_suivant) {
+			document.body.insertBefore(node2, node1_suivant)
+		} else {
+			document.body.appendChild(node2);
+		}
+	}
+}
+
+function supprimer(ev) {
+	if (ev.dataTransfer) {
+		var source = document.getElementById(ev.dataTransfer.getData("text"));
+		document.body.removeChild(source);
+	}
+	removeElementsByClass("select");	
+	setNbEleves();
+	ajouterRetour();
+    ev.preventDefault();
+}
+
+function removeElementsByClass(className){
+	// https://stackoverflow.com/questions/13125817/how-to-remove-elements-that-were-fetched-using-queryselectorall
+	var elements = document.querySelectorAll('.' + className)
+	elements.forEach(e => e.parentNode.removeChild(e));
+}
+
+function setNbEleves() {
+	var nb = document.querySelectorAll('.eleve:not(.vide)').length;
+	document.getElementById("nbeleves").innerText = nb;
+}
+
+function setEventAndId(unElt) {
+	unElt.addEventListener("click", selectionnerEleve);
+	unElt.addEventListener("drop", drop);
+	unElt.addEventListener("dragover", allowDrop);
+	unElt.addEventListener("dragstart", drag);
+	unElt.setAttribute("draggable", "true");
+	unElt.id = "elv-" + index_div++;
+}
+
+function ajouterPlace(ev) {	
+	var div = document.createElement('div');
+	div.className = "eleve vide";
+	setEventAndId(div);
+    document.body.appendChild(div);
+	ajouterRetour();
+	ev.preventDefault();	
+}
+
+function ajouterRetour() {
+	removeElementsByClass("retour");
+	var nb_par_ligne = Number(document.getElementById("select-retour").value);
+	if (nb_par_ligne > 0) {
+		var eleves = document.getElementsByClassName("eleve");
+		for (i = nb_par_ligne; i < eleves.length; i=i+nb_par_ligne) {
+			var br = document.createElement('br');
+			br.className = "retour";	
+			document.body.insertBefore(br, eleves[i]);
+		}
+	}
+}
+
+function selectionnerEleve(ev) {
+	var eleve = ev.target.parentElement;
+	if (!eleve.classList.contains("eleve")) {
+		eleve = ev.target;
+	}
+	eleve.classList.toggle("select");
+	ev.preventDefault();
+}
+
+function modifierTitre(unElt) {
+	document.title = unElt.value;
+}
+
+var index_div = 0;
+
+window.onload = function(e){
+	var eleves = document.getElementsByClassName("eleve");
+	for (i=0; i < eleves.length; i++) { // suppression des attributs "id=" avant renommage
+		eleves[i].removeAttribute("id");
+	}	
+	for (i=0; i < eleves.length; i++) {
+		setEventAndId(eleves[i]);
+	}	
+	var poubelle = document.getElementById("poubelle");
+	poubelle.addEventListener("click", supprimer);
+	poubelle.addEventListener("drop", supprimer);
+	poubelle.addEventListener("dragover", allowDrop);
+	document.getElementById("place_plus").addEventListener("click", ajouterPlace);
+	setNbEleves();
+	ajouterRetour();
+}
+		</script>
+	</head>
+	<body>
+		<table> <!-- image https://icones8.fr/ -->
+			<tbody>
+				<tr>
+					<td><input id="titre" value="{titre}" type="text" onkeyup="document.title=this.value;"> </td>
+					<td><img title="total élèves" src="data:image/jpg;base64, iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAABJ0AAASdAHeZh94AAAAB3RJTUUH5AYWCB0wbJUD3wAABUBJREFUWMPtV01PE2sYPW9nDKMkHafFhCithJAqTXWjCQkrRRI/EpvoAk0EdUVxwZ9AgwgLTYCtH4FGN2ww0R/gQhfGRlsXYkqqEyaldLR8KLTMzLkLb+falAJ6FyY391nNvHPmzMnzPO+Z5xUkiT8YHvzh+F+AvFOg4zggCSEEPB7Pb2N+OwNfvnzB3NwcTNOsiTFNE3Nzc/j69evOU8AtwnEckuTDhw/Z0dHBQ4cOsaOjgw8ePKBt2y7Otm3ev3+/AvPo0aMKjlqB7T4+MzNDAARASZIIgHV1dXzy5ImLffz4Mevq6iowAPj06dNtRWyZAZI8cuQIAXBoaIi2bXNoaIgA2NnZydXVVa6urvLkyZObYo4ePbod/fYCFEVhS0sL0+k0SXJjY4MNDQ08ePAgC4UCC4UCg8EgGxoauLGxQZJMp9NsaWmhoijbCvDU6Av3OhQKIZPJYHJyErquY2RkBPl8Hq2trdi1axdkWUZrayvy+TxGRkag6zomJyeRyWRw+PDhTTl33IQk+fLlSwohKEkSVVWlLMuUZZnT09MuZnp62l1XVZWSJFEIwVevXv16CT59+sSenh5qmkav18tYLMbbt28zHA5TVVW2tbVxamqqimhqaoptbW1UVZWRSITDw8Ps6+uj1+ulpmns7e3l58+ftxbw4cMH7t+/nwDY1NTEpqYmAmAkEmEikaBhGFxbW6vq7PL12toaDcPgmzdvGIlEqngOHDjA2dnZ2gLOnj1LALx8+TKTySSTySSvXbtGALxx4wZLpRIty3LxuVyOuVzOvbcsi8VikbFYjAB4/fp1l+fSpUsEwHPnzm0uYHFxkX6/n6qq8v37967BZLNZaprGUCjEpaUlkuTs7Cyj0Sj9fj/9fj+j0Sg/fvxIklxaWmIoFKLP5+PCwoJrWKlUiqqq0u/3c3Fx0RUg/8qPQwiBdDqNEydOwDAMeL1eAMDMzAxev36NFy9eYN++fVu5LoQQtXfB+fPnCYDd3d1u6np7ewmA/f39JMkrV664ZUqlUkylUm56e3p6SJL9/f0EwKtXr7o83d3dBMBoNFq7B3Rdp6IoFEIwEAi4zRMMBplIJEiSmqYxEAgwlUq57yWTSQYCAWqaRpJMJBIMBoNuEwYCAQohqCgKdV2vbUR3797F+vo6SELXdczPzwMADMPA8+fPAQCWZbnpdBwHjuO497ZtAwCePXsGwzAAAPPz89B1HSSxvr6Oe/fubV6CeDxOWZZZX1/PwcFBFgoFLi8vc3R0lLt37yYAvnv3jn19fW56FxYWmM1m3TLFYjG+ffuWALhnzx6Ojo5yeXmZhUKBg4ODrK+vpyzLjMfj/5TAcRyurKyws7OTAHjr1q0qsxgfHycAnjlzhrlcjqqqEgB9Ph99Ph8BcO/evczlcjx9+jQBcHx8vIrn5s2bBMBTp05xZWWFjuPQQxKmacK2bTQ2NmJgYKDCux3HQVdXF44dO4ZsNouxsTF8//79xzTj8biTz7dv3zA2NoZsNovjx4+jq6urojwAMDAwgMbGRliWBdM0f6yX93s5VZuFbdssFouMx+MEQFVVOTExwXw+z3w+z4mJCXq9XgJgPB5nsVisGFh+jnJpy8/x80d+drnNhpP29nYqisI7d+6475SJhoeHqSgK29vbtxxCLMuqEOfuAo/HA0mSahqQaZoolUoIh8O4cOFCVQkuXryIcDiMUqkE0zSrDefvkCSpYmAVOz0ZWZaFTCYDIQSam5urxNq2jUwmA5Jobm6GLO/MZMWvHM3KHlCLfLvn/1rA/0ez/6SAvwDDY3ajwxCebwAAAABJRU5ErkJggg==">
+					<br><b id="nbeleves">7</b></td>
+					<td><img id="place_plus" title="ajouter case" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAArCAIAAAB96KZjAAACT0lEQVRYhe2XPa8xQRTHZxaxiQh6JGgo+AayKl+CaNR8AAo0Igo+gAhaokOikNjNJhrKVaq8VN4SiQy7O7eYPBu53tnn5ibXqSabmfnN/+x/z5wF+KcCfEgf0u8kiaJ4uBLH41FNkopxiyRJUq1WS6fTmUwmk8mk0+nTcaVSORwO75JkWUYIRSIRcDMikQhCSJblF0mSJGGMR6MRAECr1ZpMJstZmM1mvV6v0WhGo5Gy5GmSKIoY436/DyGEEHa73d1ut91ud7udMuh0OkRWr9dTlryoieM4CCEAgOf58zmTySSbzbbb7eVyKUnSIwm8qonjOAAAhJBl2W+nlmX5fOu7CbxKYlmW5OcbSdlxOp0OBgOe5wVBIA9vK3uORPaaz+exWMzhcJAJRqORYZh6va6OJuVlCILgdrsvmj6RSNxQ9iiJ1J7VauX1egEANE2bTKZOp8OybDQapWnaYDAAAEql0jXYoyRSDgqFwqkIMjOVSilPbDbber1WIXt+v5+iKJfLxTBMMBjcbDaiKJbLZYZhAoGATqeDEDabTXzJio+SMMb7/d5qtUIIc7ncxVNbLBYIYT6fx/+y/btJz2bvvD4954hisXjbEXa7/V1HKC73+XynLuc4TmWXK14aj8cej+fil5tMJq9hniCdVqPFYhGPx51OJyn2pBo1Go2LgBdJp+Jms5lSYckJXqywP3FrPH4TtlotFW5ClmV/6HYfDofgXsdCUdRbHQsJhFA4HL7oZiVCoRBC6C7jDgnf6yyr1aoKneX/iL/2B/Ah/UXSFxAUL+M5Wns1AAAAAElFTkSuQmCC"></td>
+					<td><img id="poubelle" title="supprimer trombine" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAApCAIAAADIwPyfAAADQElEQVRYhe2XzU7yQBSGZ6ZTaIoLw66uiL0BbkBAEuNGQ6JpYsp16BW4MGjizgsQbeNFKO1cADshgn9bIxGNf9XAzLc4SYMCpa0/38azInTOeead03lnisR/CvQH/gP/Orjf7/diRb/fjw/mnMcUEjp9rOJGo+G6LmOMMeaGCH/k6elpmMl9BsNkd3d3U6kUihWqqu7s7EzU/QEMQ5vNZiKRQAglEgkaMSAxmUw2m81g9gcwvBeO4wBVkqSoYEmSgO04jl9wMrjX6wkhGGMYY1mW4y21LMsYY8aYXzCsYsYYQohSms1m8/l8LpfLhwgYls1mKaUIIQBHU+y6Lsy9Xq+PSxsX9Xodcl3XjaB4EIwxrtVqvV7v7e0tjG/AMMdxKKUYYwDHVDxx1sO5x8fHkPulpY4EBka73V5ZWZmenj45OQnO/Qbw8ICrq6unp6fgrC+BB/3B87zn52fP80Y+/U4w1OWc27ZtGIau6+l0Wtd1wzD29/ff39/FT/QYqGdnZ8VicaSNFAqFVqsVoDsOGGpdXFxkMhmwKlmWCSEYY0KILMvgmplM5vz8/DsVc849z5ubmwNL91VKkuT/hv8LhcJg10OBRxoI5xzaZlkWVMcYq6pqWZZpmggh0zQty0qlUuD2GONqtRpZcYBlrq6uQmlCiG3bQoj7+/tKpXJ3dyeEODo6IoSAhS0tLU0GBxwSxWIxn8/v7e0JIV5fX2dnZzHGkiQRQtbW1m5ubvwit7e3pmkSQqDrmqaFVRxwLK6vrwshHh4e0uk0NBX6urm5yTl/fHzknFcqFYQQgBFCiqKEVew4Dsb400VAURRK6cbGhhDi5eVF13Vfcblc7nQ6fpFOp1Mul33FMzMzk8GwTxqNBpypg1efZDJJKTUMA0YO97jb7W5tbXW7XSGEbduwrzDGy8vLk8F+bG9vT01NDS81pfT6+loIcXh4GPBWq6oKa4YxPjg4iAAWo663jLFarQaN9Dwvl8tN3Mfz8/Oh9vGnNR8X8PTy8hKcC3rhOxelFF7MCM41GOM+YQbZrVZrcXFxpFcvLCy02+0ADfE/2vyTx7KsUqmkaZqiKJqmlUqlarUKUwx7Ov1m/IH/wD8W/wAw1jOIFSoJuQAAAABJRU5ErkJggg==">
+					</td>
+					<td> 
+					<div id="nb-par-ligne"><img title="nb par ligne" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAgCAIAAAAT2oadAAAB5ElEQVRIie2WzaqCQBTHz4zNZC8QVNDjCG5qHUXvY1dXpW57iSDoi6B8kGiKFt5atOkDzl0MiFlMeiHv5v5W+dfxNzOejgJ+Hvh3/M4hhDBNk3NOKaWUapoGAOv1ejabAYCmaYQQSikAVKtVRGy32wBQKBRkzjk3TVMIoXIYhgEAlFJCCCEkvQMAolOGYagckUD+yLSOuEblkNOXV/9iHdHA9w4JpVROMAiC+Xwu7yUXRwip1WqI2Ol0AIAxRh5ROVgMzrmu64yxIAgWiwVjTNd1znmxWGSM1et1ROx2u4yxUqnEHnnzPJ5ZLpfj8TgR6rqOiI1G4+UQleMrhm3bjuNYliWE2Gw2lmU5jmPbtm3bvV7P931EHI1GMv96ROX4fiIMw/v9frvdwjCMh6fTCRHP53M8j0i7V1nrKu1eJS6Vt4sc8lDWaKVSiRxyKmkditolhLysXUJIttrNw/EHz0OyWq2m02kiLJfLiNhqtV4OUTn2Twghrtfr5XIRQkThbrc7HA6IeDwe43mEyuHG8DzP9/3BYLDf77fbbb/f933f8zzP81zXHQ6HiDiZTGTuPpJ5rxS9pNlsZt6rRGuT7S/qifKQc57oibJ1pu2J+f0/4KPvKMjhXZvHN0Me3z4f4t+Rnh+590H3aZr+3AAAAABJRU5ErkJggg=="><br>
+					  <select id="select-retour" onchange="ajouterRetour();">
+						<option value="0" selected="selected">max</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+					  </select>
+					</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		{trombines}
+	</body>
+</html>
