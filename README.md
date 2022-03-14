@@ -24,7 +24,7 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 <p>⚙ Lancer l'exécutable <code>WFA_GenerateurTrombinoscope.exe</code></p>
 <details>
 <summary>importer des photos et les recadrer</summary>
-https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_import-photos-et-recadrage.mp4
+[![Demo CountPages alpha](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_ecran-final.jpg)](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_import-photos-et-recadrage.mp4)
 
 demo-videos/1_import-photos-et-recadrage.mp4
 
