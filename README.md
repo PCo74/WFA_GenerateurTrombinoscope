@@ -10,4 +10,5 @@ Après avoir photographié les élèves, ce programme permet de :
 
 ## Installation
 Le générateur fonctionne sous Windows (.NET Framework 4.5.2).
+
 Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
