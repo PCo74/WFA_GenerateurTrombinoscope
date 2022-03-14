@@ -28,7 +28,7 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 
 <details>
 <summary>importer des photos et les recadrer</summary>
-https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4
+![importer](https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4)
 </details>
 
 <details>
