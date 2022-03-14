@@ -24,27 +24,13 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 
 
 
-https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4
-
-
-
-https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_import-photos-et-recadrage.mp4
-
-![Demo Vidéo 1](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_ecran-final.jpg)
-
-![Démo1](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_import-photos-et-recadrage.mp4)
-
-
 <p>⚙ Lancer l'exécutable <code>WFA_GenerateurTrombinoscope.exe</code></p>
+
 <details>
 <summary>importer des photos et les recadrer</summary>
-[![Demo CountPages alpha](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_ecran-final.jpg)](https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4)
-
-
-<p> <video poster="demo-videos/1_ecran-final.jpg" alt="cliquer pour lancer la vidéo"
-  controls="controls" src="demo-videos/1_import-photos-et-recadrage.mp4"></video>
-</p>
+https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4
 </details>
+
 <details>
 <summary>importer la liste des élèves et renommer les photos</summary>
 <p> <video poster="demo-videos/2_ecran-final.jpg" alt="cliquer pour lancer la vidéo"
