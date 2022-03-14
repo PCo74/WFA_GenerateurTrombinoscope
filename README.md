@@ -21,10 +21,7 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 
 **1. Générer le trombinoscope**
 
-https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4
-
-
-<p>⚙ Lancer l'exécutable <code>WFA_GenerateurTrombinoscope.exe</code></p>
+⚙ Lancer l'exécutable `WFA_GenerateurTrombinoscope.exe`
 
 <details>
 <summary>importer des photos et les recadrer</summary>
@@ -35,21 +32,25 @@ https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-
 
 <details>
 <summary>importer la liste des élèves et renommer les photos</summary>
-<p> <video poster="demo-videos/2_ecran-final.jpg" alt="cliquer pour lancer la vidéo"
-  controls="controls" src="demo-videos/2_import-liste-et-nommage.mp4"></video>
-</p>
+
+https://user-images.githubusercontent.com/76698368/158161809-0f78eefc-4ddf-452e-ad72-d8aa471995b6.mp4
+  
 </details>
+
 <details>
 <summary>exporter le trombinoscope au format HTML</summary>
-<p> <video poster="demo-videos/3_ecran-final.jpg" alt="cliquer pour lancer la vidéo"
-  controls="controls" src="demo-videos/3_export-trombi-html.mp4"></video>
-</p>
+
+https://user-images.githubusercontent.com/76698368/158161910-89e5343b-428f-4f3f-ada1-4ca1ae0eab2e.mp4
+
 </details>
-<h2>2. Réordonner les trombines</h2>
-<p>⚙ Ouvrir dans votre navigateur le trombinoscope au format HTML</p>
+
+**2. Réordonner les trombines**
+
+⚙ Ouvrir dans votre navigateur le trombinoscope au format HTML
+
 <details>
 <summary>Ajouter des emplacements vides et déplacer les trombines</summary>
-<p> <video poster="demo-videos/4_ecran-final.jpg" alt="cliquer pour lancer la vidéo"
-  controls="controls" src="demo-videos/4_plan-classe-html.mp4"></video>
-</p>
+
+https://user-images.githubusercontent.com/76698368/158161930-e307108f-2646-4a06-ab0c-fc929b40a869.mp4
+
 </details>
