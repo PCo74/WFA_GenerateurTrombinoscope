@@ -21,6 +21,8 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 
 ### 1. Générer le trombinoscope
 
+[![Demo Vidéo](https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_ecran-final.jpg)]
+
 <p>⚙ Lancer l'exécutable <code>WFA_GenerateurTrombinoscope.exe</code></p>
 <details>
 <summary>importer des photos et les recadrer</summary>
