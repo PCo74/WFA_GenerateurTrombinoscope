@@ -19,7 +19,13 @@ Quant au trombinoscope généré, il est multiplateforme (Web HTML + JavaScript)
 > - photos ©<a href="https://blogs.articulate.com/les-essentiels-du-elearning/lot-de-personnages-flat-design-gratuit/">https://blogs.articulate.com</a></li>
 > - capture vidéo ©<a href="https://github.com/MathewSachin/Captura">https://github.com/MathewSachin/Captura</a></li>
 
-### 1. Générer le trombinoscope :p
+### 1. Générer le trombinoscope
+
+
+
+
+https://user-images.githubusercontent.com/76698368/158160070-011be676-1be3-4042-b735-7a16e27285a4.mp4
+
 
 
 https://github.com/PCo74/WFA_GenerateurTrombinoscope/blob/master/demo-videos/1_import-photos-et-recadrage.mp4
